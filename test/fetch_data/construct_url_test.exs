@@ -1,13 +1,14 @@
 defmodule ContructURLTest do
   use ExUnit.Case
   alias TheSpread.ContructURL
-  #
-  # test "should return valid html when passed date and ncaa_basketball" do
-  #   date = "2017-02-10"
-  #   sport = "ncaa_basketball"
-  #   massey_html = ContructURL.massey(sport, date)
-  #   assert String.contains?(massey_html, "@ Princeton")
-  # end
+
+  test "should return valid html when passed date and ncaa_basketball" do
+    date = "2017-02-10"
+    sport = "ncaa_basketball"
+    url = "http://www.masseyratings.com/cb/11590/games?dt=20170210"
+    massey_url = ContructURL.massey(sport, date)
+    assert url == massey_url
+  end
 
   test "should get current_url with valid_date and nba" do
     date = "2017-02-10"
@@ -39,11 +40,5 @@ defmodule ContructURLTest do
     url = "http://www.masseyratings.com/cf/11604/games?dt=20170210"
     massey_url = ContructURL.massey(sport, date)
     assert url == massey_url
-  end
-
-  test "should return valid html given sport and date" do
-    date = "2017-02-10"
-    sport = "ncaa_basketball"
-    url = "http://www.masseyratings.com/cb/11590/games?dt=20170210"
   end
 end
