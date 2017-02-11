@@ -11,7 +11,8 @@ defmodule TheSpread.ParseData do
         away_team_name: away_team_name(row),
         home_team_massey_line: home_team_massey_line(row),
         away_team_massey_line: away_team_massey_line(row),
-        massey_over_under: massey_over_under(row)
+        massey_over_under: massey_over_under(row),
+        game_over: game_over?(row)
       }
     end
 
@@ -31,6 +32,19 @@ defmodule TheSpread.ParseData do
 
     def away_team_name(row) do
       Floki.find(row, ".fteam.tan a") |> List.first |> Floki.text
+    end
+
+    def game_over?(row) do
+       [_, final, _, _] = Floki.find(row, "a")
+       {_, _, final} = final
+       final = final |> List.to_string
+
+       case final do
+         "FINAL" ->
+           true
+         _other  ->
+           false
+       end
     end
 
     def home_team_massey_line(row) do
@@ -53,12 +67,12 @@ defmodule TheSpread.ParseData do
 
         _other    ->
           spread =
-          elements
-            |> Floki.find("div")
-            |> List.first
-            |> Floki.text
-            |> String.to_float
-            spread * -1
+            elements
+              |> Floki.find("div")
+              |> List.first
+              |> Floki.text
+              |> String.to_float
+          spread * -1
       end
     end
 
@@ -68,7 +82,7 @@ defmodule TheSpread.ParseData do
 
     def massey_over_under(row) do
       #This is horrible and I feel bad doing it
-      {_,_, over_under} =
+      {_ ,_ , over_under} =
         Floki.find(row, ".fscore")
           |> List.last
           |> Floki.find(".fscore")

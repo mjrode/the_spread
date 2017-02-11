@@ -61,6 +61,7 @@ defmodule ParseDataTest do
       home_team_massey_line: -1.5,
       away_team_massey_line: 1.5,
       massey_over_under: 135.5,
+      game_over: true
     }
   end
 
@@ -71,6 +72,7 @@ defmodule ParseDataTest do
       home_team_massey_line: 8.5,
       away_team_massey_line: -8.5,
       massey_over_under: 161.5,
+      game_over: true
     }
   end
 
@@ -81,6 +83,7 @@ defmodule ParseDataTest do
       home_team_massey_line: -16.5,
       away_team_massey_line: 16.5,
       massey_over_under: 140.5,
+      game_over: true
     }
   end
 
@@ -91,6 +94,7 @@ defmodule ParseDataTest do
       home_team_massey_line: -14.5,
       away_team_massey_line: 14.5,
       massey_over_under: 139.5,
+      game_over: true
     }
   end
 end
