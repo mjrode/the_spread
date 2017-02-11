@@ -5,7 +5,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.12.0">
-    <title>TheSpread.FetchHTML – the_spread v0.0.1</title>
+    <title>TheSpread.FetchURL – the_spread v0.0.1</title>
     <link rel="stylesheet" href="dist/app-88251e7c81.css" />
     
     <script src="dist/sidebar_items.js"></script>
@@ -59,7 +59,7 @@
 
       <h1>
         <small class="visible-xs">the_spread v0.0.1</small>
-        TheSpread.FetchHTML
+        TheSpread.FetchURL
         
         
       </h1>
@@ -133,10 +133,10 @@
 <pre><code class="elixir">- sport: String that represents the sport you want massey_data for
 - date: String in the form of &quot;yyyy-mm-dd&quot; that represents the date of the game</code></pre>
 <p>  ##Examples</p>
-<pre><code class="iex elixir">iex&gt; FetchHTML.massey(&quot;ncaa_basketball&quot;, &quot;2017-02-11&quot;)
+<pre><code class="iex elixir">iex&gt; FetchURL.massey(&quot;ncaa_basketball&quot;, &quot;2017-02-11&quot;)
 &quot;http://www.masseyratings.com/cb/11590/games?dt=20170211&quot;
 
-iex&gt; FetchHTML.massey(&quot;not_valid_sport&quot;, &quot;2017-02-11&quot;)
+iex&gt; FetchURL.massey(&quot;not_valid_sport&quot;, &quot;2017-02-11&quot;)
 :error, &quot;No match found for not_valid_sport on 2017-02-11&quot;}</code></pre>
 
   </section>
