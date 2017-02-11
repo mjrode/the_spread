@@ -41,4 +41,37 @@ defmodule ConstructURLTest do
     massey_url = ConstructURL.massey(sport, date)
     assert url == massey_url
   end
+
+  test "should get wunderdog with valid_date and ncaa_football" do
+    date = "2017-02-10"
+    sport = "ncaa_football"
+    url = "http://www.wunderdog.com/public-consensus/cfb.html?date=02%2F10%2F2017"
+    wunderdog_url = ConstructURL.wunderdog(sport, date)
+    assert url == wunderdog_url
+  end
+
+  test "should get wunderdog with valid_date and ncaa_basketball" do
+    date = "2017-02-10"
+    sport = "ncaa_basketball"
+    url = "http://www.wunderdog.com/public-consensus/cbb.html?date=02%2F10%2F2017"
+    wunderdog_url = ConstructURL.wunderdog(sport, date)
+    assert url == wunderdog_url
+  end
+
+  test "should get wunderdog with valid_date and nba" do
+    date = "2017-02-10"
+    sport = "nba"
+    url = "http://www.wunderdog.com/public-consensus/nba.html?date=02%2F10%2F2017"
+    wunderdog_url = ConstructURL.wunderdog(sport, date)
+    assert url == wunderdog_url
+  end
+
+  test "should get wunderdog with valid_date and nfl" do
+    date = "2017-02-10"
+    sport = "nfl"
+    url = "http://www.wunderdog.com/public-consensus/nfl.html?date=02%2F10%2F2017"
+    wunderdog_url = ConstructURL.wunderdog(sport, date)
+    assert url == wunderdog_url
+  end
+
 end
