@@ -5,7 +5,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.12.0">
-    <title>TheSpread.ContructURL – the_spread v0.0.1</title>
+    <title>FetchHTML – the_spread v0.0.1</title>
     <link rel="stylesheet" href="dist/app-88251e7c81.css" />
     
     <script src="dist/sidebar_items.js"></script>
@@ -59,15 +59,14 @@
 
       <h1>
         <small class="visible-xs">the_spread v0.0.1</small>
-        TheSpread.ContructURL
+        FetchHTML
         
         
       </h1>
 
       
         <section id="moduledoc" class="docstring">
-          <p>  Provides a function <a href="#massey/2"><code class="inline">massey/2</code></a> that returns the url containing massey data for that
-  sport on that date.</p>
+          <p>  Provides a function <a href="#fetch_html/1"><code class="inline">fetch_html/1</code></a> to fetch html source code</p>
 
         </section>
       
@@ -89,10 +88,10 @@
     </h2>
     <div class="summary-row">
   <div class="summary-signature">
-    <a href="#massey/2">massey(sport, date)</a>
+    <a href="#fetch_html/1">fetch_html(url)</a>
   </div>
   
-    <div class="summary-synopsis"><p>Returns a massey_url that maps to the correct data</p>
+    <div class="summary-synopsis"><p>Returns html source code for the given url</p>
 </div>
   
 </div>
@@ -117,27 +116,20 @@
             </a>
             Functions
           </h1>
-          <div class="detail" id="massey/2">
+          <div class="detail" id="fetch_html/1">
   <div class="detail-header">
-    <a href="#massey/2" class="detail-link" title="Link to this function">
+    <a href="#fetch_html/1" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
     </a>
-    <span class="signature">massey(sport, date)</span>
+    <span class="signature">fetch_html(url)</span>
     
     
   </div>
   
   <section class="docstring">
-    <p>  Returns a massey_url that maps to the correct data.</p>
-<p>  ##Parameters</p>
-<pre><code class="elixir">- sport: String that represents the sport you want massey_data for
-- date: String in the form of &quot;yyyy-mm-dd&quot; that represents the date of the game</code></pre>
-<p>  ##Examples</p>
-<pre><code class="iex elixir">iex&gt; ContructURL.massey(&quot;ncaa_basketball&quot;, &quot;2017-02-11&quot;)
-&quot;http://www.masseyratings.com/nba/games?dt=20170210&quot;
-
-iex&gt; ContructURL.massey(&quot;not_valid_sport&quot;, &quot;2017-02-11&quot;)
-:error, &quot;No match found for not_valid_sport on 2017-02-11&quot;}</code></pre>
+    <p>  Returns html source code for the given url.</p>
+<p>  ## Parameters</p>
+<pre><code class="elixir">- url: String that represents the url of a website</code></pre>
 
   </section>
 </div>
