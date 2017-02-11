@@ -35,6 +35,14 @@ defmodule TheSpread.FetchURL do
     "http://www.masseyratings.com/nba/games?dt=#{massey_formatted_date(date)}"
   end
 
+  defp fetch_nfl_url(date) do
+    "http://www.masseyratings.com/nfl/games?dt=#{massey_formatted_date(date)}"
+  end
+
+  defp fetch_ncaa_football_url(date) do
+    "http://www.masseyratings.com/cf/11604/games?dt=#{massey_formatted_date(date)}"
+  end
+
   # Use this in other module
   # defp today_formatted_date do
   #   date = DateTime.utc_now
