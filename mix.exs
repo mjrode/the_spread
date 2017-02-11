@@ -42,8 +42,8 @@ defmodule TheSpread.Mixfile do
      {:httpoison, "~> 0.10.0"},
      {:floki, "~> 0.14.0"},
      {:timex, "~> 3.0"},
-     {:earmark, "~> 0.1", only: :dev},
-     {:ex_doc, "~> 0.11", only: :dev}]
+     {:earmark, "~> 0.1"},
+     {:ex_doc, "~> 0.11"}]
   end
 
 
