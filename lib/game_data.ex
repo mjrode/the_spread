@@ -9,7 +9,7 @@ defmodule TheSpread.GameData do
   end
 
   def create_game(game_params) do
-    Beneficiary.changeset(game_params)
+    Game.changeset(game_params)
       |> Repo.insert
   end
 
@@ -19,7 +19,7 @@ defmodule TheSpread.GameData do
 
   def update_game(id, game_params) do
     Repo.get!(Game, id)
-      |> Beneficiary.changeset(game_params)
+      |> Game.changeset(game_params)
       |> Repo.update
   end
 
