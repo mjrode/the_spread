@@ -43,7 +43,8 @@ defmodule TheSpread.Mixfile do
      {:floki, "~> 0.14.0"},
      {:timex, "~> 3.0"},
      {:earmark, "~> 0.1"},
-     {:ex_doc, "~> 0.11"}]
+     {:ex_doc, "~> 0.11"},
+     {:exvcr, "~> 0.8", only: :test} ]
   end
 
 

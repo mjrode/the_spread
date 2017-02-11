@@ -10,9 +10,16 @@ defmodule TheSpread.HTML do
       - url: String that represents the url of a website
   """
 
+  # This error handling is probably in the wrong location
+  # Only works when receiving url from ContructURL
   def fetch(url) do
-    Hound.start_session
-    navigate_to(url)
-    page_source
+    case url do
+      {:error, message} ->
+        message
+      _ ->
+      Hound.start_session
+      navigate_to(url)
+      page_source
+    end
   end
 end
