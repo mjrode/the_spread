@@ -116,6 +116,31 @@ defmodule TheSpread.ExampleRequest do
     ["139.5", {"div", [{"class", "ltred visHidden"}], ["140.0"]}]},
    {"td", [{"class", "fdummy"}], []}]}
   end
+
+  def massey_row_game_not_over do
+    {"tr", [{"class", "bodyrow rcCB:NCAA I gstatus2 tr0"}, {"data-idx", "13"}],
+  [{"td", [{"class", "fdate sorted"}],
+    [{"a", [{"href", "game.php?gid=737531676"}], ["Mon 02.13"]},
+     {"div", [{"class", "detail"}], []}]},
+   {"td", [{"class", "fteam tan"}],
+    [{"a", [{"href", "team.php?s=292154&t=2899"}], ["Ga Southern"]},
+     {"div", [{"class", "undefined"}],
+      [{"a", [{"href", "team.php?s=292154&t=275"}], ["@ Appalachian St"]}]}]},
+   {"td", [{"class", "frankrec burly"}],
+    ["# 120 (16-8)", {"div", [{"class", "undefined"}], ["# 293 (6-16)"]}]},
+   {"td", [{"class", "fscore greybg white"}],
+    ["0", {"div", [{"class", "undefined white"}], ["0"]}]},
+   {"td", [{"class", "fpred cWin"}],
+    ["78", {"div", [{"class", "undefined white"}], ["74"]}]},
+   {"td", [{"class", "fpred cWin"}],
+    ["65 %", {"div", [{"class", "undefined white"}], ["35 %"]}]},
+   {"td", [{"class", "fscore"}],
+    [{"div", [{"class", "ltgreen"}], ["-4.5"]},
+     {"div", [{"class", "ltred visHidden"}], ["---"]}]},
+   {"td", [{"class", "fscore ltgreen"}],
+    ["153.5", {"div", [{"class", "ltred visHidden"}], ["---"]}]},
+   {"td", [{"class", "fdummy"}], []}]}
+  end
 end
 
 ExUnit.start

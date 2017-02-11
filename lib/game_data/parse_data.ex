@@ -35,16 +35,12 @@ defmodule TheSpread.ParseData do
     end
 
     def game_over?(row) do
-       [_, final, _, _] = Floki.find(row, "a")
-       {_, _, final} = final
-       final = final |> List.to_string
-
-       case final do
-         "FINAL" ->
-           true
-         _other  ->
-           false
-       end
+       try  do
+         [_, _, _, _] = Floki.find(row, "a")
+         true
+      rescue
+        MatchError -> false
+      end
     end
 
     def home_team_massey_line(row) do

@@ -54,6 +54,12 @@ defmodule ParseDataTest do
     assert massey_over_under == massey_row1_returns.massey_over_under
   end
 
+  test "gets data when game has not been played" do
+    row = massey_row_game_not_over
+    IO.inspect ParseData.set_variables(row)
+    assert ParseData.set_variables(row) == massey_game_not_over_returns
+  end
+
   def massey_row1_returns do
     %{
       home_team_name:  "@ Rhode Island",
@@ -95,6 +101,17 @@ defmodule ParseDataTest do
       away_team_massey_line: 14.5,
       massey_over_under: 139.5,
       game_over: true
+    }
+  end
+
+  def massey_game_not_over_returns do
+    %{
+      home_team_name:  "@ Appalachian St",
+      away_team_name: "Ga Southern",
+      home_team_massey_line: 4.5,
+      away_team_massey_line: -4.5,
+      massey_over_under: 153.5,
+      game_over: false
     }
   end
 end
