@@ -18,8 +18,8 @@ defmodule TheSpread.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {TheSpread, []},
-     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+    applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
+                   :phoenix_ecto, :postgrex, :hound, :httpoison, :floki, :timex, :earmark, :ex_doc]]
   end
 
   # Specifies which paths to compile per environment.
@@ -37,8 +37,15 @@ defmodule TheSpread.Mixfile do
      {:phoenix_html, "~> 2.6"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+     {:hound, "~> 1.0"},
+     {:httpoison, "~> 0.10.0"},
+     {:floki, "~> 0.14.0"},
+     {:timex, "~> 3.0"},
+     {:earmark, "~> 0.1", only: :dev},
+     {:ex_doc, "~> 0.11", only: :dev}]
   end
+
 
   # Aliases are shortcuts or tasks specific to the current project.
   # For example, to create, migrate and run the seeds file at once:
