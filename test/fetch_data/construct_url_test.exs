@@ -1,12 +1,12 @@
-defmodule ContructURLTest do
+defmodule ConstructURLTest do
   use ExUnit.Case
-  alias TheSpread.ContructURL
+  alias TheSpread.ConstructURL
 
   test "should return valid html when passed date and ncaa_basketball" do
     date = "2017-02-10"
     sport = "ncaa_basketball"
     url = "http://www.masseyratings.com/cb/11590/games?dt=20170210"
-    massey_url = ContructURL.massey(sport, date)
+    massey_url = ConstructURL.massey(sport, date)
     assert url == massey_url
   end
 
@@ -14,7 +14,7 @@ defmodule ContructURLTest do
     date = "2017-02-10"
     sport = "nba"
     url = "http://www.masseyratings.com/nba/games?dt=20170210"
-    massey_url = ContructURL.massey(sport, date)
+    massey_url = ConstructURL.massey(sport, date)
     assert url == massey_url
   end
 
@@ -22,7 +22,7 @@ defmodule ContructURLTest do
     date = "2017-02-10"
     sport = "invalid"
     error_message = {:error, "No match found for invalid on 2017-02-10"}
-    massey_url = ContructURL.massey(sport, date)
+    massey_url = ConstructURL.massey(sport, date)
     assert massey_url == error_message
   end
 
@@ -30,7 +30,7 @@ defmodule ContructURLTest do
     date = "2017-02-10"
     sport = "nfl"
     url = "http://www.masseyratings.com/nfl/games?dt=20170210"
-    massey_url = ContructURL.massey(sport, date)
+    massey_url = ConstructURL.massey(sport, date)
     assert url == massey_url
   end
 
@@ -38,7 +38,7 @@ defmodule ContructURLTest do
     date = "2017-02-10"
     sport = "ncaa_football"
     url = "http://www.masseyratings.com/cf/11604/games?dt=20170210"
-    massey_url = ContructURL.massey(sport, date)
+    massey_url = ConstructURL.massey(sport, date)
     assert url == massey_url
   end
 end

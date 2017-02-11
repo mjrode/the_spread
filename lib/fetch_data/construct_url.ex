@@ -1,4 +1,4 @@
-defmodule TheSpread.ContructURL do
+defmodule TheSpread.ConstructURL do
   use Hound.Helpers
   @moduledoc """
     Provides a function `massey/2` that returns the url containing massey data for that
@@ -12,10 +12,10 @@ defmodule TheSpread.ContructURL do
       - sport: String that represents the sport you want massey_data for
       - date: String in the form of "yyyy-mm-dd" that represents the date of the game
     ##Examples
-      iex> ContructURL.massey("ncaa_basketball", "2017-02-11")
+      iex> ConstructURL.massey("ncaa_basketball", "2017-02-11")
       "http://www.masseyratings.com/nba/games?dt=20170210"
 
-      iex> ContructURL.massey("not_valid_sport", "2017-02-11")
+      iex> ConstructURL.massey("not_valid_sport", "2017-02-11")
       :error, "No match found for not_valid_sport on 2017-02-11"}
   """
   def massey(sport, date) do

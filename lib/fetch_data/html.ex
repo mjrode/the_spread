@@ -11,7 +11,7 @@ defmodule TheSpread.HTML do
   """
 
   # This error handling is probably in the wrong location
-  # Only works when receiving url from ContructURL
+  # Only works when receiving url from ConstructURL
   def fetch(url) do
     case url do
       {:error, message} ->

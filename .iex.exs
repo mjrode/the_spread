@@ -4,5 +4,5 @@ import Ecto.Changeset
 
 import TheSpread.Repo
 alias TheSpread.Repo
-alias TheSpread.ContructURL
+alias TheSpread.ConstructURL
 alias TheSpread.ParseHTML
