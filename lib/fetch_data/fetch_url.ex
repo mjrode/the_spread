@@ -22,6 +22,8 @@ defmodule TheSpread.FetchURL do
     case sport do
       "ncaa_basketball" -> fetch_ncaa_basketball_url(date)
       "nba"             -> fetch_nba_url(date)
+      "nfl"             -> fetch_nfl_url(date)
+      "ncaa_football"   -> fetch_ncaa_football_url(date)
       _ -> {:error, "No match found for #{sport} on #{date}"}
     end
   end

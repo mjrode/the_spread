@@ -25,4 +25,20 @@ defmodule FetchURLTest do
     massey_url = FetchURL.massey(sport, date)
     assert massey_url == error_message
   end
+
+  test "should get current_url with valid_date and nfl" do
+    date = "2017-02-10"
+    sport = "nfl"
+    url = "http://www.masseyratings.com/nfl/games?dt=20170210"
+    massey_url = FetchURL.massey(sport, date)
+    assert url == massey_url
+  end
+
+  test "should get current_url with valid_date and ncaa_football" do
+    date = "2017-02-10"
+    sport = "ncaa_football"
+    url = "http://www.masseyratings.com/cf/11604/games?dt=20170210"
+    massey_url = FetchURL.massey(sport, date)
+    assert url == massey_url
+  end
 end
