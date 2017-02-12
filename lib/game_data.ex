@@ -1,9 +1,8 @@
 defmodule TheSpread.GameData do
-  import Ecto
   alias TheSpread.Repo
   alias TheSpread.Game
   alias TheSpread.HTML
-  alias TheSpread.ParseData
+  alias TheSpread.ParseMasseyData
   alias TheSpread.ConstructURL
 
   # Game Functions
@@ -19,7 +18,7 @@ defmodule TheSpread.GameData do
   def fetch_and_insert_massey_games(sport, date) do
     games = ConstructURL.massey(sport, date)
       |> HTML.fetch
-      |> ParseData.bundle_games(sport, date)
+      |> ParseMasseyData.bundle_games(sport, date)
 
       for game <- games, do: Game.changeset(%Game{}, game)
         |> Repo.insert

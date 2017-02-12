@@ -1,5 +1,4 @@
-defmodule TheSpread.ParseData do
-  import Timex
+defmodule TheSpread.ParseMasseyData do
     @doc """
       Returns a list of Game maps that can be passed into a changeset
     """
@@ -9,9 +8,9 @@ defmodule TheSpread.ParseData do
       for row <- table, do: set_variables(row, sport, date)
     end
 
-    # Left public for testing 
+    # Left public for testing
     def set_variables(row, sport, date) do
-      data = %{
+      %{
         date: format_date(date),
         sport: sport,
         home_team_name: home_team_name(row),

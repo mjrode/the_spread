@@ -1,69 +1,69 @@
-defmodule ParseDataTest do
+defmodule ParseMasseyDataTest do
   use ExUnit.Case
   import TheSpread.ExampleRequest
-  alias TheSpread.ParseData
+  alias TheSpread.ParseMasseyData
 
   test "bundle_games returns list of Game maps" do
     html = TheSpread.HTML.fetch("http://www.masseyratings.com/cb/11590/games?dt=20170210")
-    list = ParseData.bundle_games(html, "ncaa_basketball", "2017-02-10")
+    list = ParseMasseyData.bundle_games(html, "ncaa_basketball", "2017-02-10")
     assert bundle_games_returns == list
   end
   test "all variable are set and returned in map for row1" do
     row = massey_row1
     sport = "ncaa_basketball"
     date = "2017-02-10"
-    assert ParseData.set_variables(row, sport, date) ==  massey_row1_returns
+    assert ParseMasseyData.set_variables(row, sport, date) ==  massey_row1_returns
   end
 
   test "all variable are set and returned in map for row2" do
     row = massey_row2
     sport = "ncaa_basketball"
     date = "2017-02-10"
-    assert ParseData.set_variables(row, sport, date) == massey_row2_returns
+    assert ParseMasseyData.set_variables(row, sport, date) == massey_row2_returns
   end
 
   test "all variable are set and returned in map for row3" do
     row = massey_row3
     sport = "ncaa_basketball"
     date = "2017-02-10"
-    assert ParseData.set_variables(row, sport, date) == massey_row3_returns
+    assert ParseMasseyData.set_variables(row, sport, date) == massey_row3_returns
   end
 
   test "all variable are set and returned in map for row4" do
     row = massey_row4
     sport = "ncaa_basketball"
     date = "2017-02-10"
-    assert ParseData.set_variables(row, sport, date) == massey_row4_returns
+    assert ParseMasseyData.set_variables(row, sport, date) == massey_row4_returns
   end
 
   test "return home team name" do
     row = massey_row1
-    home_team_name = ParseData.home_team_name(row)
+    home_team_name = ParseMasseyData.home_team_name(row)
     assert home_team_name == massey_row1_returns.home_team_name
   end
 
   test "return away team name" do
     row = massey_row1
 
-    away_team_name = ParseData.away_team_name(row)
+    away_team_name = ParseMasseyData.away_team_name(row)
     assert away_team_name == massey_row1_returns.away_team_name
   end
 
   test "return home_team_massey_line" do
     row = massey_row1
-    home_team_massey_line = ParseData.home_team_massey_line(row)
+    home_team_massey_line = ParseMasseyData.home_team_massey_line(row)
     assert home_team_massey_line == massey_row1_returns.home_team_massey_line
   end
 
   test "return away_team_massey_line" do
     row = massey_row1
-    away_team_massey_line = ParseData.away_team_massey_line(row)
+    away_team_massey_line = ParseMasseyData.away_team_massey_line(row)
     assert away_team_massey_line == massey_row1_returns.away_team_massey_line
   end
 
   test "return massey_over_under" do
     row = massey_row1
-    massey_over_under = ParseData.massey_over_under(row)
+    massey_over_under = ParseMasseyData.massey_over_under(row)
     assert massey_over_under == massey_row1_returns.massey_over_under
   end
 
@@ -71,7 +71,7 @@ defmodule ParseDataTest do
     row = massey_row_game_not_over
     sport = "ncaa_basketball"
     date = "2017-02-10"
-    assert ParseData.set_variables(row, sport, date) == massey_game_not_over_returns
+    assert ParseMasseyData.set_variables(row, sport, date) == massey_game_not_over_returns
   end
 
   def massey_row1_returns do
