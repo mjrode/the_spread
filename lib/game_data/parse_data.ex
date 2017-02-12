@@ -1,7 +1,7 @@
 defmodule TheSpread.ParseData do
   import Timex
     @doc """
-      Returns a map with all of the game data for that day
+      Returns a list of Game maps that can be passed into a changeset
     """
 
     def bundle_games(html, sport, date) do
@@ -9,7 +9,7 @@ defmodule TheSpread.ParseData do
       for row <- table, do: set_variables(row, sport, date)
     end
 
-    # Left most of these public because they are easier to test.
+    # Left public for testing 
     def set_variables(row, sport, date) do
       data = %{
         date: format_date(date),
