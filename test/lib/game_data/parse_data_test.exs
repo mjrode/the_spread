@@ -5,22 +5,30 @@ defmodule ParseDataTest do
 
   test "all variable are set and returned in map for row1" do
     row = massey_row1
-    assert ParseData.set_variables(row) ==  massey_row1_returns
+    sport = "ncaa_basketball"
+    date = "2017-02-10"
+    assert ParseData.set_variables(row, sport, date) ==  massey_row1_returns
   end
 
   test "all variable are set and returned in map for row2" do
     row = massey_row2
-    assert ParseData.set_variables(row) == massey_row2_returns
+    sport = "ncaa_basketball"
+    date = "2017-02-10"
+    assert ParseData.set_variables(row, sport, date) == massey_row2_returns
   end
 
   test "all variable are set and returned in map for row3" do
     row = massey_row3
-    assert ParseData.set_variables(row) == massey_row3_returns
+    sport = "ncaa_basketball"
+    date = "2017-02-10"
+    assert ParseData.set_variables(row, sport, date) == massey_row3_returns
   end
 
   test "all variable are set and returned in map for row4" do
     row = massey_row4
-    assert ParseData.set_variables(row) == massey_row4_returns
+    sport = "ncaa_basketball"
+    date = "2017-02-10"
+    assert ParseData.set_variables(row, sport, date) == massey_row4_returns
   end
 
   test "return home team name" do
@@ -56,8 +64,9 @@ defmodule ParseDataTest do
 
   test "gets data when game has not been played" do
     row = massey_row_game_not_over
-    IO.inspect ParseData.set_variables(row)
-    assert ParseData.set_variables(row) == massey_game_not_over_returns
+    sport = "ncaa_basketball"
+    date = "2017-02-10"
+    assert ParseData.set_variables(row, sport, date) == massey_game_not_over_returns
   end
 
   def massey_row1_returns do
@@ -67,7 +76,9 @@ defmodule ParseDataTest do
       home_team_massey_line: -1.5,
       away_team_massey_line: 1.5,
       massey_over_under: 135.5,
-      game_over: true
+      game_over: true,
+      sport: "ncaa_basketball",
+      date: "2017-02-10"
     }
   end
 
@@ -78,7 +89,9 @@ defmodule ParseDataTest do
       home_team_massey_line: 8.5,
       away_team_massey_line: -8.5,
       massey_over_under: 161.5,
-      game_over: true
+      game_over: true,
+      sport: "ncaa_basketball",
+      date: "2017-02-10"
     }
   end
 
@@ -89,7 +102,9 @@ defmodule ParseDataTest do
       home_team_massey_line: -16.5,
       away_team_massey_line: 16.5,
       massey_over_under: 140.5,
-      game_over: true
+      game_over: true,
+      sport: "ncaa_basketball",
+      date: "2017-02-10"
     }
   end
 
@@ -100,7 +115,9 @@ defmodule ParseDataTest do
       home_team_massey_line: -14.5,
       away_team_massey_line: 14.5,
       massey_over_under: 139.5,
-      game_over: true
+      game_over: true,
+      sport: "ncaa_basketball",
+      date: "2017-02-10"
     }
   end
 
@@ -111,7 +128,9 @@ defmodule ParseDataTest do
       home_team_massey_line: 4.5,
       away_team_massey_line: -4.5,
       massey_over_under: 153.5,
-      game_over: false
+      game_over: false,
+      sport: "ncaa_basketball",
+      date: "2017-02-10",
     }
   end
 end
