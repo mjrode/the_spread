@@ -5,7 +5,7 @@ defmodule TheSpread.Game do
     field :sport, :string
     field :home_team_name, :string
     field :away_team_name, :string
-    field :date, Ecto.DateTime
+    field :date, Ecto.Date
     field :home_team_massey_line, :float
     field :away_team_massey_line, :float
     field :home_team_vegas_line, :float

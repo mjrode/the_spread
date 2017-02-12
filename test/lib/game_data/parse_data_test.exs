@@ -78,7 +78,7 @@ defmodule ParseDataTest do
       massey_over_under: 135.5,
       game_over: true,
       sport: "ncaa_basketball",
-      date: "2017-02-10"
+      date: ~D[2017-02-10]
     }
   end
 
@@ -91,7 +91,7 @@ defmodule ParseDataTest do
       massey_over_under: 161.5,
       game_over: true,
       sport: "ncaa_basketball",
-      date: "2017-02-10"
+      date: ~D[2017-02-10]
     }
   end
 
@@ -104,7 +104,7 @@ defmodule ParseDataTest do
       massey_over_under: 140.5,
       game_over: true,
       sport: "ncaa_basketball",
-      date: "2017-02-10"
+      date: ~D[2017-02-10]
     }
   end
 
@@ -117,7 +117,7 @@ defmodule ParseDataTest do
       massey_over_under: 139.5,
       game_over: true,
       sport: "ncaa_basketball",
-      date: "2017-02-10"
+      date: ~D[2017-02-10]
     }
   end
 
@@ -130,7 +130,7 @@ defmodule ParseDataTest do
       massey_over_under: 153.5,
       game_over: false,
       sport: "ncaa_basketball",
-      date: "2017-02-10",
+      date: ~D[2017-02-10]
     }
   end
 end

@@ -1,4 +1,5 @@
 defmodule TheSpread.ParseData do
+  import Timex
     @doc """
       Returns a map with all of the game data for that day
     """
@@ -11,7 +12,7 @@ defmodule TheSpread.ParseData do
     # Left most of these public because they are easier to test.
     def set_variables(row, sport, date) do
       data = %{
-        date: date,
+        date: format_date(date),
         sport: sport,
         home_team_name: home_team_name(row),
         away_team_name: away_team_name(row),
@@ -106,5 +107,10 @@ defmodule TheSpread.ParseData do
       rescue
         MatchError -> nil
       end
+    end
+
+    def format_date(date) do
+      {_, date} = Date.from_iso8601(date)
+      date #|> Ecto.DateTime.cast!
     end
 end
