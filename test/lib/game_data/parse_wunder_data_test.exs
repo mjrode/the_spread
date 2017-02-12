@@ -3,6 +3,11 @@ defmodule ParseWunderDataTest do
   use ExUnit.Case
   alias TheSpread.ParseWunderData
 
+  test "set_variables fetches and sets all the proper data" do
+    row = wunder_row1
+    set_variables = ParseWunderData.set_variables(row, "ncaa_basketball", "2017-02-10")
+    assert set_variables == set_variables_return
+  end
   test "return home_team_spread_percent" do
     row = wunder_row1
     home_team_spread_percent = ParseWunderData.home_team_spread_percent(row)
@@ -73,5 +78,14 @@ defmodule ParseWunderDataTest do
     row = wunder_row1
     vegas_over_under = ParseWunderData.vegas_over_under(row)
     assert vegas_over_under == 153.5
+  end
+
+  def set_variables_return do
+    %{away_team_bet_count: 465, away_team_name: "Ohio Bobcats",
+  away_team_spread_percent: "49%", away_team_vegas_line: 1.5,
+  date: ~D[2017-02-10], home_team_bet_count: 476,
+  home_team_name: "Ball State Cardinals", home_team_spread_percent: "51%",
+  home_team_vegas_line: -1.5, over_percent: "67%", sport: "ncaa_basketball",
+  under_percent: "33%", vegas_over_under: 153.5}
   end
 end

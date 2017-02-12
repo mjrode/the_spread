@@ -269,18 +269,6 @@ defmodule TheSpread.ExampleRequest do
          {"class", "progress-bar progress-bar-warning progress-bar-striped"}],
         []}]}]}]}
   end
-
-  def odds_table_return do
-    [{"span", [{"class", "checkmark"}],
-  [{"strong", [], ["O 153.5 (-110)    "]},
-   " [Open: O 153.5 (-110)    ]\n                "]},
- {"span", [{"class", "checkmark"}],
-  [{"strong", [], ["-1.5 (-110)    "]},
-   " [Open: 1.5 (-110)    ]\n                "]},
- {"span", [{"class", "checkmark"}],
-  [{"strong", [], ["1.5 (-110)    "]},
-   " [Open: -1.5 (-110)    ]\n                "]}]
-  end
 end
 
 ExUnit.start

@@ -8,6 +8,7 @@ defmodule ParseMasseyDataTest do
     list = ParseMasseyData.bundle_games(html, "ncaa_basketball", "2017-02-10")
     assert bundle_games_returns == list
   end
+  
   test "all variable are set and returned in map for row1" do
     row = massey_row1
     sport = "ncaa_basketball"
