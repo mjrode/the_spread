@@ -9,6 +9,18 @@ defmodule ParseWunderDataTest do
     assert home_team_spread_percent  == "51%"
   end
 
+  test "return over_percent" do
+    row = wunder_row1
+    over_percent = ParseWunderData.over_percent(row)
+    assert over_percent  == "67%"
+  end
+
+  test "return under_percent" do
+    row = wunder_row1
+    under_percent = ParseWunderData.under_percent(row)
+    assert under_percent  == "33%"
+  end
+
   test "return away_team_spread_percent" do
     row = wunder_row1
     away_team_spread_percent = ParseWunderData.away_team_spread_percent(row)
