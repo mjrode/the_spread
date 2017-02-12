@@ -28,6 +28,8 @@ defmodule TheSpread.Repo.Migrations.AddGames do
         add :correct_prediction, :boolean, default: false, null: false
         add :correct_over_under_prediction, :boolean, default: false, null: false
         add :strength, :float
+        add :home_team_bet_count, :integer
+        add :away_team_bet_count, :integer
 
         timestamps()
       end

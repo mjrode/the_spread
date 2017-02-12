@@ -27,6 +27,8 @@ defmodule TheSpread.Game do
     field :correct_prediction, :boolean, default: false
     field :correct_over_under_prediction, :boolean, default: false
     field :strength, :float
+    field :home_team_bet_count, :integer
+    field :away_team_bet_count, :integer
 
     timestamps()
   end
