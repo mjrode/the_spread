@@ -16,10 +16,10 @@ defmodule TheSpread.HTML do
     case url do
       {:error, message} ->
         message
-      _ ->
-      Hound.start_session
-      navigate_to(url)
-      page_source
+      _success ->
+        Hound.start_session
+        navigate_to(url)
+        page_source
     end
   end
 end
