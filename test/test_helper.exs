@@ -231,44 +231,6 @@ defmodule TheSpread.ExampleRequest do
           {"class", "progress-bar progress-bar-warning progress-bar-striped"}],
          []}]}]}]}]
   end
-
-  def wunder_row2 do
-    {"tr", [{"class", "striped"}],
-  [{"td", [],
-    [{"a",
-      [{"href", "/consensus/viewScoreOdds/event_id/429853.html?width=610"},
-       {"name",
-        "Dayton Flyers  vs. Rhode Island Rams - Friday February 10, 2017 7:00 pm"},
-       {"class", "jTip hidden-xs"}, {"id", "429853"}], ["score »"]},
-     {"a",
-      [{"href", "/consensus/viewScoreOdds/event_id/429853.html"},
-       {"name",
-        "Dayton Flyers  vs. Rhode Island Rams - Friday February 10, 2017 7:00 pm"},
-       {"class", "visible-xs"}, {"id", "429853"}], ["score »"]}]},
-   {"td", [], ["870"]},
-   {"td", [{"style", "white-space:nowrap"}], ["Rhode Island Rams"]},
-   {"td", [], ["811 "]}, {"td", [], ["\n            46% \n          "]},
-   {"td", [{"class", "pc_percent_bar"}, {"valign", "middle"}],
-    [{"div", [{"class", "progress grey wd_progress"}],
-      [{"div",
-        [{"style", "width:  46%;"},
-         {"class", "progress-bar progress-bar-warning progress-bar-striped"}],
-        []}]}]}, {"td", [], ["148 "]},
-   {"td", [], ["\n            57% \n          "]},
-   {"td", [{"class", "pc_percent_bar"}, {"valign", "middle"}],
-    [{"div", [{"class", "progress wd_progress"}],
-      [{"div",
-        [{"style", "width:  57%;"},
-         {"class", "progress-bar progress-bar-warning progress-bar-striped"}],
-        []}]}]}, {"td", [], ["U 185 "]},
-   {"td", [], ["\n            34% \n          "]},
-   {"td", [{"class", "pc_percent_bar"}, {"valign", "middle"}],
-    [{"div", [{"class", "progress grey wd_progress"}],
-      [{"div",
-        [{"style", "width:  34%;"},
-         {"class", "progress-bar progress-bar-warning progress-bar-striped"}],
-        []}]}]}]}
-  end
 end
 
 ExUnit.start

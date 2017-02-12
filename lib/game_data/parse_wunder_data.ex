@@ -7,7 +7,7 @@ defmodule TheSpread.ParseWunderData do
   """
 
   @doc """
-    Returns a list of Game maps with massey data.
+    Returns a list of Game maps with wunder data.
 
     ##Parameters
       - sport: String that represents the sport you want massey_data for
@@ -67,17 +67,25 @@ defmodule TheSpread.ParseWunderData do
 
   def home_team_vegas_line(row) do
     [_, home, _] = get_odds_table(row)
-    Floki.text(home)
+    line = Floki.text(home)
       |> String.split(" ")
       |> List.first
       |> String.split("(")
       |> List.first
-      |> String.trim
-      |> String.to_float
+      try do
+        line
+          |> String.trim
+          |> String.to_float
+      rescue
+        FunctionClauseError ->
+          {_, _, percent} = line
+          List.to_string(percent)
+      end
   end
 
   def away_team_vegas_line(row) do
     [_, _, away] = get_odds_table(row)
+    try do
     Floki.text(away)
       |> String.split(" ")
       |> List.first
@@ -85,6 +93,16 @@ defmodule TheSpread.ParseWunderData do
       |> List.first
       |> String.trim
       |> String.to_float
+    rescue
+      FunctionClauseError ->
+        line = Floki.text(away)
+          |> String.split(" ")
+          |> List.first
+          |> String.split("(")
+          |> List.first
+        {_, _, percent} = line
+        List.to_string(percent)
+    end
   end
 
   def vegas_over_under(row) do
@@ -118,26 +136,53 @@ defmodule TheSpread.ParseWunderData do
   def under_percent(row) do
     [_ | [ under | _ ] ] = over_under_percent_data(row)
     {_, _, percent} = under
-    percent |> List.first |> String.trim
+    try do
+      percent |> List.first |> String.trim
+    rescue
+       FunctionClauseError ->
+        percent = percent |> List.first
+        {_, _, percent} = percent
+        List.to_string(percent)
+    end
   end
 
   def over_percent(row) do
     [over | [ _ | _ ] ] = over_under_percent_data(row)
     {_, _, percent} = over
-    [{_, _, percent}] = percent
-    percent |> List.first |> String.trim
+    try do
+      percent |> List.first |> String.trim
+    rescue
+       FunctionClauseError ->
+        percent = percent |> List.first
+        {_, _, percent} = percent
+        List.to_string(percent)
+    end
   end
 
   def home_team_spread_percent(row) do
     [_| [ home | _ ] ] = spread_percent_data(row)
     {_, _, percent} = home
-    percent |> List.first |> String.trim
+    try do
+      percent |> List.first |> String.trim
+    rescue
+      FunctionClauseError ->
+        line = percent |> List.first
+        {_, _, percent} = line
+        List.to_string(percent)
+    end
   end
 
   def away_team_spread_percent(row) do
     [away | [ _ | _ ] ] = spread_percent_data(row)
     {_, _, percent} = away
-    percent |> List.first |> String.trim
+    try do
+      percent |> List.first |> String.trim
+    rescue
+      FunctionClauseError ->
+        line = percent |> List.first
+        {_, _, percent} = line
+        List.to_string(percent)
+    end
   end
 
   def home_team_bet_count(row) do

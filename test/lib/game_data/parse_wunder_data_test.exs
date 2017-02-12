@@ -8,6 +8,13 @@ defmodule ParseWunderDataTest do
     set_variables = ParseWunderData.set_variables(row, "ncaa_basketball", "2017-02-10")
     assert set_variables == set_variables_return
   end
+
+  # test "set_variables fetches and sets all the proper data when public is over 70%" do
+  #   row = wunder_row2
+  #   set_variables = ParseWunderData.set_variables(row, "ncaa_basketball", "2017-02-10")
+  #   assert set_variables == set_variables_return_green
+  # end
+
   test "return home_team_spread_percent" do
     row = wunder_row1
     home_team_spread_percent = ParseWunderData.home_team_spread_percent(row)
@@ -87,5 +94,14 @@ defmodule ParseWunderDataTest do
   home_team_name: "Ball State Cardinals", home_team_spread_percent: "51%",
   home_team_vegas_line: -1.5, over_percent: "67%", sport: "ncaa_basketball",
   under_percent: "33%", vegas_over_under: 153.5}
+  end
+
+  def set_variables_return_green do
+    %{away_team_bet_count: 932, away_team_name: "Akron Zips",
+  away_team_spread_percent: "73%", away_team_vegas_line: -1.5,
+  date: ~D[2017-02-10], home_team_bet_count: 352,
+  home_team_name: "Eastern Michigan Eagles", home_team_spread_percent: "27%",
+  home_team_vegas_line: 1.5, over_percent: "73%", sport: "ncaa_basketball",
+  under_percent: "27%", vegas_over_under: 149.5}
   end
 end
