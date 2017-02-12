@@ -46,7 +46,7 @@ defmodule TheSpread.ParseWunderData do
       |> String.to_float
   end
 
-  def over_under_vegas_line(row) do
+  def vegas_over_under(row) do
     [over, _, _] = get_odds_table(row)
     Floki.text(over)
       |> String.split(" ")

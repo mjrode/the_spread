@@ -25,6 +25,17 @@ defmodule ParseWunderDataTest do
     row = wunder_row1
     home_team_vegas_line = ParseWunderData.home_team_vegas_line(row)
     assert home_team_vegas_line == -1.5
+  end
 
+  test "return away_team_vegas_line" do
+    row = wunder_row1
+    away_team_vegas_line = ParseWunderData.away_team_vegas_line(row)
+    assert away_team_vegas_line == 1.5
+  end
+
+  test "return over under" do
+    row = wunder_row1
+    vegas_over_under = ParseWunderData.vegas_over_under(row)
+    assert vegas_over_under == 153.5
   end
 end
