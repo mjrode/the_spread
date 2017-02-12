@@ -1,8 +1,21 @@
 defmodule TheSpread.ParseMasseyData do
-    @doc """
-      Returns a list of Game maps that can be passed into a changeset
+    @moduledoc """
+      Provides a function `bundle_games/3` which returns a list of Game maps.
+
+      Several methods are left public in here that should not be used by other
+      modules but needed to be tested(Needs to be fixed).
     """
 
+    @doc """
+      Returns a list of Game maps with massey data.
+
+      ##Parameters
+        - sport: String that represents the sport you want massey_data for
+        - date: String in the form of "yyyy-mm-dd" that represents the date of the game
+        - html: The html that is returned by calling
+          ConstructURL.massey(sport, date)
+            |> HTML.fetch
+    """
     def bundle_games(html, sport, date) do
       table = massey_table(html)
       for row <- table, do: set_variables(row, sport, date)
@@ -77,7 +90,7 @@ defmodule TheSpread.ParseMasseyData do
     end
 
     def massey_over_under(row) do
-      #This is horrible and I feel bad doing it
+      # This is horrible and I feel bad doing it
       {_ ,_ , over_under} =
         Floki.find(row, ".fscore")
           |> List.last
@@ -90,9 +103,15 @@ defmodule TheSpread.ParseMasseyData do
 
     def home_team_final_score(row) do
       try do
-        {_,_, c} = Floki.find(row, ".fscore.greybg.white" ) |> List.last
-        {_,_,score} = c |> List.last
-        score |> List.to_string |> String.to_integer
+        {_,_, c} =
+          Floki.find(row, ".fscore.greybg.white" )
+          |> List.last
+        {_,_,score} =
+          c
+          |> List.last
+        score
+          |> List.to_string
+          |> String.to_integer
       rescue
         MatchError -> nil
       end
@@ -110,6 +129,6 @@ defmodule TheSpread.ParseMasseyData do
 
     def format_date(date) do
       {_, date} = Date.from_iso8601(date)
-      date #|> Ecto.DateTime.cast!
+      date
     end
 end
