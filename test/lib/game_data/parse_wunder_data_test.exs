@@ -9,6 +9,18 @@ defmodule ParseWunderDataTest do
     assert home_team_name == "Ohio Bobcats"
   end
 
+  test  "returns home_team_bet_count" do
+    row = wunder_row1
+    home_team_bet_count = ParseWunderData.home_team_bet_count(row)
+    assert home_team_bet_count == 476
+  end
+
+  test  "returns away_team_bet_count" do
+    row = wunder_row1
+    away_team_bet_count = ParseWunderData.away_team_bet_count(row)
+    assert away_team_bet_count == 465
+  end
+
   test "return home team name" do
     row = wunder_row1
     home_team_name = ParseWunderData.home_team_name(row)

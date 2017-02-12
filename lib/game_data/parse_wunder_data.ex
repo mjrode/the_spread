@@ -1,7 +1,7 @@
 defmodule TheSpread.ParseWunderData do
 
   def table(html) do
-    Floki.find(html, "table.table.table-bordered.table-condensed tbody tr") |> Enum.drop(3)
+    Floki.find(html, "table.table.table-bordered.table-condensed tbody tr") |> Enum.drop(3) |> Enum.chunk(3)
   end
 
   def home_team_name(row) do
@@ -55,6 +55,20 @@ defmodule TheSpread.ParseWunderData do
       |> List.last
       |> String.trim
       |> String.to_float
+  end
+
+  def bet_count_data(row) do
+    Floki.find(row, "td:nth-child(4)")
+  end
+
+  def home_team_bet_count(row) do
+    [ _ | [home | _ ]] = bet_count_data(row)
+    Floki.text(home) |> String.trim |> String.to_integer
+  end
+
+  def away_team_bet_count(row) do
+    [ away | [ _ | _ ]] = bet_count_data(row)
+    Floki.text(away) |> String.trim |> String.to_integer
   end
 
   def get_odds_url(row) do
