@@ -3,6 +3,18 @@ defmodule ParseWunderDataTest do
   use ExUnit.Case
   alias TheSpread.ParseWunderData
 
+  test "return home_team_spread_percent" do
+    row = wunder_row1
+    home_team_spread_percent = ParseWunderData.home_team_spread_percent(row)
+    assert home_team_spread_percent  == "51%"
+  end
+
+  test "return away_team_spread_percent" do
+    row = wunder_row1
+    away_team_spread_percent = ParseWunderData.away_team_spread_percent(row)
+    assert away_team_spread_percent == "49%"
+  end
+
   test "return away team name" do
     row = wunder_row1
     home_team_name = ParseWunderData.away_team_name(row)

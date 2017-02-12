@@ -58,7 +58,26 @@ defmodule TheSpread.ParseWunderData do
   end
 
   def bet_count_data(row) do
-    Floki.find(row, "td:nth-child(4)")
+    List.flatten(row)
+      |> Floki.find("td:nth-child(4)")
+  end
+
+  def bet_percent_data(row) do
+    row
+      |> List.flatten
+      |> Floki.find("td:nth-child(5)")
+  end
+
+  def home_team_spread_percent(row) do
+    [_ | [ home | _ ] ] = bet_percent_data(row)
+     {_, _, percent} = home
+     percent |> List.first |> String.trim
+  end
+
+  def away_team_spread_percent(row) do
+    [away | [ _ | _ ] ] = bet_percent_data(row)
+     {_, _, percent} = away
+     percent |> List.first |> String.trim
   end
 
   def home_team_bet_count(row) do
