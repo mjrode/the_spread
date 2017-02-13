@@ -1,9 +1,12 @@
 defmodule TheSpread.ParseWunderData do
   @moduledoc """
+    TODO: Rename to PrepareWunderData
     Provides a function `bundle_games/3` which returns a list of Game maps.
 
     Several methods are left public in here that should not be used by other
     modules but needed to be tested(Needs to be fixed).
+
+    FIX: Need to improve how I handle errors when parsing unexpected HTML
   """
 
   @doc """
@@ -54,6 +57,7 @@ defmodule TheSpread.ParseWunderData do
       |> String.split("-")
       |> List.first
       |> String.trim
+      |> String.downcase
   end
 
   def away_team_name(row) do
@@ -63,6 +67,7 @@ defmodule TheSpread.ParseWunderData do
       |> String.split("vs.")
       |> List.first
       |> String.trim
+      |> String.downcase
   end
 
   def home_team_vegas_line(row) do
@@ -137,12 +142,12 @@ defmodule TheSpread.ParseWunderData do
     [_ | [ under | _ ] ] = over_under_percent_data(row)
     {_, _, percent} = under
     try do
-      percent |> List.first |> String.trim
+      percent |> List.first |> String.trim |> String.strip(?%) |> String.to_integer
     rescue
        FunctionClauseError ->
         percent = percent |> List.first
         {_, _, percent} = percent
-        List.to_string(percent)
+        List.to_string(percent) |> String.strip(?%) |> String.to_integer
     end
   end
 
@@ -150,12 +155,12 @@ defmodule TheSpread.ParseWunderData do
     [over | [ _ | _ ] ] = over_under_percent_data(row)
     {_, _, percent} = over
     try do
-      percent |> List.first |> String.trim
+      percent |> List.first |> String.trim |> String.strip(?%) |> String.to_integer
     rescue
        FunctionClauseError ->
         percent = percent |> List.first
         {_, _, percent} = percent
-        List.to_string(percent)
+        List.to_string(percent) |> String.strip(?%) |> String.to_integer
     end
   end
 
@@ -163,12 +168,12 @@ defmodule TheSpread.ParseWunderData do
     [_| [ home | _ ] ] = spread_percent_data(row)
     {_, _, percent} = home
     try do
-      percent |> List.first |> String.trim
+      percent |> List.first |> String.trim |> String.strip(?%) |> String.to_integer
     rescue
       FunctionClauseError ->
         line = percent |> List.first
         {_, _, percent} = line
-        List.to_string(percent)
+        List.to_string(percent) |> String.strip(?%) |> String.to_integer
     end
   end
 
@@ -176,12 +181,12 @@ defmodule TheSpread.ParseWunderData do
     [away | [ _ | _ ] ] = spread_percent_data(row)
     {_, _, percent} = away
     try do
-      percent |> List.first |> String.trim
+      percent |> List.first |> String.trim |> String.strip(?%) |> String.to_integer
     rescue
       FunctionClauseError ->
         line = percent |> List.first
         {_, _, percent} = line
-        List.to_string(percent)
+        List.to_string(percent) |> String.strip(?%) |> String.to_integer
     end
   end
 

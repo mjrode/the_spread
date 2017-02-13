@@ -3,6 +3,7 @@ defmodule TheSpread.GameData do
   alias TheSpread.Game
   alias TheSpread.HTML
   alias TheSpread.ParseMasseyData
+  alias TheSpread.ParseWunderData
   alias TheSpread.ConstructURL
 
   # Game Functions
@@ -13,6 +14,15 @@ defmodule TheSpread.GameData do
   def create_game(game_params) do
     Game.changeset(game_params)
       |> Repo.insert
+  end
+
+  def fetch_and_insert_wunder_games(sport, date) do
+    games = ConstructURL.wunderdog(sport, date)
+      |> HTML.fetch
+      |> ParseWunderData.bundle_games(sport, date)
+
+      for game <- games, do: Game.changeset(%Game{}, game)
+        |> Repo.insert
   end
 
   def fetch_and_insert_massey_games(sport, date) do

@@ -40,11 +40,17 @@ defmodule TheSpread.ParseMasseyData do
     end
 
     def home_team_name(row) do
-      Floki.find(row, ".fteam.tan a") |> List.last |> Floki.text
+      Floki.find(row, ".fteam.tan a")
+        |> List.last
+        |> Floki.text
+        |> String.downcase
     end
 
     def away_team_name(row) do
-      Floki.find(row, ".fteam.tan a") |> List.first |> Floki.text
+      Floki.find(row, ".fteam.tan a")
+        |> List.first
+        |> Floki.text
+        |> String.downcase 
     end
 
     def game_over?(row) do
