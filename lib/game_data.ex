@@ -1,4 +1,7 @@
 defmodule TheSpread.GameData do
+  import Ecto
+  import Ecto.Query
+  import Ecto.Changeset
   alias TheSpread.Repo
   alias TheSpread.Game
   alias TheSpread.HTML
@@ -30,8 +33,20 @@ defmodule TheSpread.GameData do
       |> HTML.fetch
       |> ParseMasseyData.bundle_games(sport, date)
 
-      for game <- games, do: Game.changeset(%Game{}, game)
-        |> Repo.insert
+      for game <- games do
+        home_team_name = game.home_team_name
+        date = game.date
+        sport = game.sport
+        game = Map.delete(game, :home_team_name)
+          |> Map.delete(:away_team_name)
+          |> Map.delete(:date)
+          |> Map.delete(:sport)
+
+        require IEx; IEx.pry
+        Repo.one(from g in Game, where: like(g.home_team_name,"^home_team_name%") and (g.date == ^date) and (g.sport == ^sport))
+         |> Game.changeset(game)
+         |> Repo.update
+      end
   end
 
   def get_game(id) do

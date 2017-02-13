@@ -44,13 +44,14 @@ defmodule TheSpread.ParseMasseyData do
         |> List.last
         |> Floki.text
         |> String.downcase
+        |> String.replace("@ ", "")
     end
 
     def away_team_name(row) do
       Floki.find(row, ".fteam.tan a")
         |> List.first
         |> Floki.text
-        |> String.downcase 
+        |> String.downcase
     end
 
     def game_over?(row) do

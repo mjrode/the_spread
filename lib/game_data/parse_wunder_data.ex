@@ -30,8 +30,8 @@ defmodule TheSpread.ParseWunderData do
     %{
       date: format_date(date),
       sport: sport,
-      home_team_name: home_team_name(row),
-      away_team_name: away_team_name(row),
+      home_team_name: String.downcase(home_team_name(row)),
+      away_team_name: String.downcase(away_team_name(row)),
       home_team_vegas_line: home_team_vegas_line(row),
       away_team_vegas_line: away_team_vegas_line(row),
       vegas_over_under: vegas_over_under(row),
