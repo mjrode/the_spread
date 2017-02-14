@@ -1,13 +1,12 @@
 defmodule TheSpread.GameData do
-  import Ecto
   import Ecto.Query
-  import Ecto.Changeset
   alias TheSpread.Repo
   alias TheSpread.Game
   alias TheSpread.HTML
   alias TheSpread.ParseMasseyData
   alias TheSpread.ParseWunderData
   alias TheSpread.ConstructURL
+  alias TheSpread.TeamName
 
   # Game Functions
   def list_games() do
@@ -28,12 +27,23 @@ defmodule TheSpread.GameData do
     ## Examples
       - TheSpread.GameData.fetch_and_insert_wunder_games("ncaa_basketball", "2017-02-10")
   """
+  def fetch_game_data(start_date, days, sport) do
+    {_, start_date} = Date.from_iso8601(start_date)
+    dates = Timex.Interval.new(from: (start_date), until: [days: days]) |> Enum.map(fn(dt) -> Timex.format!(dt, "%Y-%m-%d", :strftime)end)
+    Enum.map(dates, fn date -> fetch_game_data(sport, date) end)
+  end
+
+  def fetch_game_data(sport, date) do
+      fetch_and_insert_wunder_games(sport, date)
+      fetch_and_insert_massey_games(sport, date)
+  end
+
   def fetch_and_insert_wunder_games(sport, date) do
     # Fetch and parse html, bundle games in to list of maps
     games = ConstructURL.wunderdog(sport, date)
       |> HTML.fetch
       |> ParseWunderData.bundle_games(sport, date)
-      
+
       for game <- games do
         find_or_create(game, date)
       end
@@ -45,16 +55,17 @@ defmodule TheSpread.GameData do
       |> ParseMasseyData.bundle_games(sport, date)
 
       for game <- games do
-        home_team_name = TheSpread.TeamName.format_college_name(game.home_team_name)
-        date = game.date
-        sport = game.sport
-        game_params = Map.delete(game, :home_team_name)
-          |> Map.delete(:away_team_name)
-          |> Map.delete(:date)
-          |> Map.delete(:sport)
-        require IEx; IEx.pry
-        Repo.one(from g in Game, where: (g.home_team_name == ^home_team_name) and (g.date == ^date) and (g.sport == ^sport))
-         |> Repo.update(game_params)
+        game_params = prepare_game_params(game)
+        game_query = massey_game_query(game, date)
+        # require IEx; IEx.pry
+        try do
+          game_query
+           |> Game.changeset(game_params)
+           |> Repo.update
+        rescue
+          FunctionClauseError ->
+            nil
+        end
       end
   end
 
@@ -74,23 +85,49 @@ defmodule TheSpread.GameData do
   end
 
   defp find_or_create(game, date) do
-    game_query = game_query(game, date)
+    game_query = wunder_game_query(game, date)
 
     case game_query do
       nil ->
         Game.changeset(%Game{}, game)
           |> Repo.insert()
       _present ->
+        # require IEx; IEx.pry
         Game.changeset(game_query, game)
           |> Repo.update()
     end
   end
 
-  defp game_query(game, date) do
+  defp wunder_game_query(game, date) do
     Game
       |> where([g], g.home_team_name == ^game.home_team_name)
       |> where([g], g.away_team_name == ^game.away_team_name)
       |> where([g], g.date == ^date)
       |> Repo.one
+  end
+
+  defp massey_game_query(game, date) do
+    home_team_name = TeamName.format_college_name(game.home_team_name)
+    away_team_name = TeamName.format_college_name(game.away_team_name)
+    Game
+      |> where([g], g.home_team_name == ^home_team_name)
+      |> where([g], g.away_team_name == ^away_team_name)
+      |> where([g], g.date == ^date)
+      |> Repo.one
+  end
+
+  defp prepare_game_params(game) do
+    Map.delete(game, :home_team_name)
+      |> Map.delete(:away_team_name)
+      |> Map.delete(:date)
+      |> Map.delete(:sport)
+  end
+
+  defp find_game(game) do
+    home_team_name = TeamName.format_college_name(game.home_team_name)
+    away_team_name = TeamName.format_college_name(game.away_team_name)
+    date = game.date
+    sport = game.sport
+    Repo.one(from g in Game, where: (g.home_team_name == ^home_team_name) and (g.away_team_name == ^away_team_name) and (g.date == ^date) and (g.sport == ^sport))
   end
 end

@@ -38,7 +38,7 @@ defmodule TheSpread.Game do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:sport, :home_team_name, :away_team_name, :date, :home_team_massey_line, :away_team_massey_line, :home_team_vegas_line, :away_team_vegas_line, :vegas_over_under, :massey_over_under, :home_team_final_score, :away_team_final_score, :team_to_bet, :line_diff, :over_under_diff, :over_under_pick, :home_team_spread_percent, :away_team_spread_percent, :over_percent, :under_percent, :public_percentage_on_massey_team, :game_over, :correct_prediction, :correct_over_under_prediction, :strength])
+    |> cast(params, [:sport, :home_team_name, :away_team_name, :date, :home_team_massey_line, :away_team_massey_line, :home_team_vegas_line, :away_team_vegas_line, :vegas_over_under, :massey_over_under, :home_team_final_score, :away_team_final_score, :team_to_bet, :line_diff, :over_under_diff, :over_under_pick, :home_team_spread_percent, :away_team_spread_percent, :over_percent, :under_percent, :public_percentage_on_massey_team, :game_over, :correct_prediction, :correct_over_under_prediction, :strength, :home_team_bet_count, :away_team_bet_count])
     |> validate_required([:sport, :home_team_name, :away_team_name])
   end
 end
