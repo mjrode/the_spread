@@ -208,10 +208,19 @@ defmodule TheSpread.ParseWunderData do
   end
 
   def get_odds_table(row) do
-    get_odds_url(row)
+    odds_table = get_odds_url(row)
       |> TheSpread.HTML.fetch
       |> Floki.find("table span.checkmark")
       |> Enum.drop(15)
+    case odds_table do
+      [] ->
+        odds_table = get_odds_url(row)
+          |> TheSpread.HTML.fetch
+          |> Floki.find("table span")
+          |> Enum.drop(15)
+      _else ->
+        odds_table
+    end
   end
 
   def format_date(date) do
