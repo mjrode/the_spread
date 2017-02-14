@@ -40,7 +40,10 @@ defmodule TheSpread.ParseWunderData do
       under_percent: under_percent(row),
       over_percent: over_percent(row),
       home_team_bet_count: home_team_bet_count(row),
-      away_team_bet_count: away_team_bet_count(row)
+      away_team_bet_count: away_team_bet_count(row),
+      home_team_final_score: home_team_final_score(row),
+      away_team_final_score: away_team_final_score(row)
+
     }
   end
 
@@ -82,9 +85,10 @@ defmodule TheSpread.ParseWunderData do
           |> String.trim
           |> String.to_float
       rescue
-        FunctionClauseError ->
-          {_, _, percent} = line
-          List.to_string(percent)
+        _ -> nil
+        # _ ->
+        #   {_, _, percent} = line
+        #   List.to_string(percent)
       end
   end
 
@@ -99,14 +103,15 @@ defmodule TheSpread.ParseWunderData do
       |> String.trim
       |> String.to_float
     rescue
-      FunctionClauseError ->
-        line = Floki.text(away)
-          |> String.split(" ")
-          |> List.first
-          |> String.split("(")
-          |> List.first
-        {_, _, percent} = line
-        List.to_string(percent)
+      _ -> nil
+      # FunctionClauseError ->
+      #   line = Floki.text(away)
+      #     |> String.split(" ")
+      #     |> List.first
+      #     |> String.split("(")
+      #     |> List.first
+      #   {_, _, percent} = line
+      #   List.to_string(percent)
     end
   end
 
@@ -220,6 +225,34 @@ defmodule TheSpread.ParseWunderData do
           |> Enum.drop(15)
       _else ->
         odds_table
+    end
+  end
+
+  def home_team_final_score(row) do
+    try do
+      odds_table = get_odds_url(row)
+        |> TheSpread.HTML.fetch
+        |> Floki.find("tbody tr td")
+        |> Enum.take(18)
+        |> Enum.drop(17)
+        |> Floki.text
+        |> String.to_integer
+    rescue
+      FunctionClauseError -> nil
+    end
+  end
+
+  def away_team_final_score(row) do
+    try do
+      odds_table = get_odds_url(row)
+        |> TheSpread.HTML.fetch
+        |> Floki.find("tbody tr td")
+        |> Enum.take(13)
+        |> Enum.drop(12)
+        |> Floki.text
+        |> String.to_integer
+    rescue
+      FunctionClauseError -> nil
     end
   end
 
