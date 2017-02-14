@@ -5,6 +5,8 @@ defmodule TheSpread.HTML do
   use Hound.Helpers
   @doc """
     Returns html source code for the given url.
+    You need to make sure the phantom js webdriver is running to use this module.
+    To start the webdriver type `phantomjs --wd` in your terminal.
 
     ## Parameters
       - url: String that represents the url of a website
