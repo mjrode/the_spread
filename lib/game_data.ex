@@ -7,26 +7,26 @@ defmodule TheSpread.GameData do
   alias TheSpread.ParseWunderData
   alias TheSpread.ConstructURL
   alias TheSpread.TeamName
+  alias TheSpread.Calculate
 
   # Game Functions
   def list_games() do
     Repo.all(Game)
   end
 
-  def create_game(game_params) do
-    Game.changeset(game_params)
-      |> Repo.insert
-  end
-
-  @doc """
-    Fetches and stores a collection of games given that sport and date
+    @doc """
+    Given a sport, date, and number of days fetch_game_date will
+    iterate over the date range and grab all game information for that
+    sport from both wunder and massey sites.
 
     ## Parameters
       - sport: String that represents the sport you want massey_data for
       - date: String in the form of "yyyy-mm-dd" that represents the date of the game
+      - days: Integer that represents the number of days you want to iterate over
     ## Examples
       - TheSpread.GameData.fetch_and_insert_wunder_games("ncaa_basketball", "2017-02-10")
   """
+
   def fetch_game_data(sport, start_date, days) do
     {_, start_date} = Date.from_iso8601(start_date)
     dates = Timex.Interval.new(from: (start_date), until: [days: days]) |> Enum.map(fn(dt) -> Timex.format!(dt, "%Y-%m-%d", :strftime)end)
@@ -49,6 +49,24 @@ defmodule TheSpread.GameData do
       end
   end
 
+  def calculate_all_games do
+    games = Repo.all(Game)
+    for game <- games do
+      try do
+        params = Calculate.bundle_variables(game)
+        case params do
+          nil -> nil
+          _else ->
+          Game.changeset(game, params)
+            |> Repo.update
+        end
+      rescue
+        KeyError ->
+          nil
+      end
+    end
+  end
+
   def fetch_and_insert_massey_games(sport, date) do
     games = ConstructURL.massey(sport, date)
       |> HTML.fetch
@@ -69,21 +87,6 @@ defmodule TheSpread.GameData do
       end
   end
 
-  def get_game(id) do
-    Repo.get!(Game, id)
-  end
-
-  def update_game(id, game_params) do
-    Repo.get!(Game, id)
-      |> Game.changeset(game_params)
-      |> Repo.update
-  end
-
-  def delete_game(id) do
-    Repo.get!(Game, id)
-      |> Repo.delete!
-  end
-
   defp find_or_create(game, date) do
     game_query = wunder_game_query(game, date)
 
@@ -92,7 +95,6 @@ defmodule TheSpread.GameData do
         Game.changeset(%Game{}, game)
           |> Repo.insert()
       _present ->
-        # require IEx; IEx.pry
         Game.changeset(game_query, game)
           |> Repo.update()
     end

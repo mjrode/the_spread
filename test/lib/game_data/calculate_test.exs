@@ -70,6 +70,7 @@ defmodule CalculateTest do
     # TODO: Something is wrong with how we are grabbing this data.
     # The home team and away team spread percent are off.
     # Should add a check that makes sure home spread perc + away spread perc = 100%
+
     %TheSpread.Game{
      away_team_bet_count: 520, away_team_final_score: 72,
      away_team_massey_line: 0.5, away_team_name: "michigan state spartans",
