@@ -77,7 +77,7 @@ defmodule ParseMasseyDataTest do
 
   def massey_row1_returns do
     %{
-      home_team_name:  "@ rhode island",
+      home_team_name:  "rhode island",
       away_team_name: "dayton",
       home_team_massey_line: -1.5,
       away_team_massey_line: 1.5,
@@ -90,7 +90,7 @@ defmodule ParseMasseyDataTest do
 
   def massey_row2_returns do
     %{
-      home_team_name:  "@ detroit",
+      home_team_name:  "detroit",
       away_team_name: "oakland",
       home_team_massey_line: 8.5,
       away_team_massey_line: -8.5,
@@ -103,7 +103,7 @@ defmodule ParseMasseyDataTest do
 
   def massey_row3_returns do
     %{
-      home_team_name:  "@ yale",
+      home_team_name:  "yale",
       away_team_name: "dartmouth",
       home_team_massey_line: -16.5,
       away_team_massey_line: 16.5,
@@ -116,7 +116,7 @@ defmodule ParseMasseyDataTest do
 
   def massey_row4_returns do
     %{
-      home_team_name:  "@ princeton",
+      home_team_name:  "princeton",
       away_team_name: "cornell",
       home_team_massey_line: -14.5,
       away_team_massey_line: 14.5,
@@ -129,7 +129,7 @@ defmodule ParseMasseyDataTest do
 
   def massey_game_not_over_returns do
     %{
-      home_team_name:  "@ appalachian st",
+      home_team_name:  "appalachian st",
       away_team_name: "ga southern",
       home_team_massey_line: 4.5,
       away_team_massey_line: -4.5,
@@ -142,39 +142,7 @@ defmodule ParseMasseyDataTest do
 
   def bundle_games_returns do
     [
-      %{away_team_massey_line: 1.5, away_team_name: "dayton", date: ~D[2017-02-10],
-       game_over: true, home_team_massey_line: -1.5,
-       home_team_name: "@ rhode island", massey_over_under: 135.5,
-       sport: "ncaa_basketball"},
-     %{away_team_massey_line: -8.5, away_team_name: "oakland", date: ~D[2017-02-10],
-       game_over: true, home_team_massey_line: 8.5, home_team_name: "@ detroit",
-       massey_over_under: 161.5, sport: "ncaa_basketball"},
-     %{away_team_massey_line: 16.5, away_team_name: "dartmouth",
-       date: ~D[2017-02-10], game_over: true, home_team_massey_line: -16.5,
-       home_team_name: "@ yale", massey_over_under: 140.5,
-       sport: "ncaa_basketball"},
-     %{away_team_massey_line: 14.5, away_team_name: "cornell", date: ~D[2017-02-10],
-       game_over: true, home_team_massey_line: -14.5, home_team_name: "@ princeton",
-       massey_over_under: 139.5, sport: "ncaa_basketball"},
-     %{away_team_massey_line: 2.5, away_team_name: "columbia", date: ~D[2017-02-10],
-       game_over: true, home_team_massey_line: -2.5, home_team_name: "@ penn",
-       massey_over_under: 139.5, sport: "ncaa_basketball"},
-     %{away_team_massey_line: -4.5, away_team_name: "harvard", date: ~D[2017-02-10],
-       game_over: true, home_team_massey_line: 4.5, home_team_name: "@ brown",
-       massey_over_under: 147.5, sport: "ncaa_basketball"},
-     %{away_team_massey_line: 8.5, away_team_name: "niagara", date: ~D[2017-02-10],
-       game_over: true, home_team_massey_line: -8.5, home_team_name: "@ canisius",
-       massey_over_under: 161.5, sport: "ncaa_basketball"},
-     %{away_team_massey_line: -10.5, away_team_name: "monmouth nj",
-       date: ~D[2017-02-10], game_over: true, home_team_massey_line: 10.5,
-       home_team_name: "@ manhattan", massey_over_under: 153.5,
-       sport: "ncaa_basketball"},
-     %{away_team_massey_line: -0.5, away_team_name: "akron", date: ~D[2017-02-10],
-       game_over: true, home_team_massey_line: 0.5, home_team_name: "@ e michigan",
-       massey_over_under: 146.5, sport: "ncaa_basketball"},
-     %{away_team_massey_line: -1.5, away_team_name: "ohio", date: ~D[2017-02-10],
-       game_over: true, home_team_massey_line: 1.5, home_team_name: "@ ball st",
-       massey_over_under: 149.5, sport: "ncaa_basketball"}
+      %{away_team_name: "dayton", date: ~D[2017-02-10], game_over: true, home_team_name: "rhode island", massey_over_under: 135.5, sport: "ncaa_basketball", away_team_massey_line: 0.5, home_team_massey_line: -0.5}, %{away_team_massey_line: -8.5, away_team_name: "oakland", date: ~D[2017-02-10], game_over: true, home_team_massey_line: 8.5, home_team_name: "detroit", massey_over_under: 161.5, sport: "ncaa_basketball"}, %{away_team_name: "dartmouth", date: ~D[2017-02-10], game_over: true, home_team_name: "yale", massey_over_under: 140.5, sport: "ncaa_basketball", away_team_massey_line: 17.5, home_team_massey_line: -17.5}, %{away_team_name: "cornell", date: ~D[2017-02-10], game_over: true, home_team_name: "princeton", sport: "ncaa_basketball", away_team_massey_line: 13.5, home_team_massey_line: -13.5, massey_over_under: 141.5}, %{away_team_name: "columbia", date: ~D[2017-02-10], game_over: true, home_team_name: "penn", sport: "ncaa_basketball", away_team_massey_line: 3.5, home_team_massey_line: -3.5, massey_over_under: 140.5}, %{away_team_name: "harvard", date: ~D[2017-02-10], game_over: true, home_team_name: "brown", massey_over_under: 147.5, sport: "ncaa_basketball", away_team_massey_line: -3.5, home_team_massey_line: 3.5}, %{away_team_name: "niagara", date: ~D[2017-02-10], game_over: true, home_team_name: "canisius", massey_over_under: 161.5, sport: "ncaa_basketball", away_team_massey_line: 9.5, home_team_massey_line: -9.5}, %{away_team_massey_line: -10.5, away_team_name: "monmouth nj", date: ~D[2017-02-10], game_over: true, home_team_massey_line: 10.5, home_team_name: "manhattan", massey_over_under: 153.5, sport: "ncaa_basketball"}
      ]
   end
 end

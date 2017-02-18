@@ -93,7 +93,7 @@ defmodule ParseWunderDataTest do
   date: ~D[2017-02-10], home_team_bet_count: 476,
   home_team_name: "ball state cardinals", home_team_spread_percent: 51,
   home_team_vegas_line: -1.5, over_percent: 67, sport: "ncaa_basketball",
-  under_percent: 33, vegas_over_under: 153.5}
+  under_percent: 33, vegas_over_under: 153.5,  away_team_final_score: 79, home_team_final_score: 77}
   end
 
   def set_variables_return_green do

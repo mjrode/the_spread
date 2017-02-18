@@ -37,7 +37,7 @@ defmodule TheSpread.TeamName do
     "maryland": "maryland terrapins",
     "notre dame": "notre dame fighting irish",
     "south carolina": "south carolina gamecocks",
-    "butler": "",
+    "butler": "butler bulldogs",
     "oklahoma st": "oklahoma state cowboys",
     "xavier": "xavier musketeers",
     "wichita st": "wichita state shockers",

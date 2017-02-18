@@ -27,15 +27,15 @@ defmodule TheSpread.GameData do
     ## Examples
       - TheSpread.GameData.fetch_and_insert_wunder_games("ncaa_basketball", "2017-02-10")
   """
-  def fetch_game_data(start_date, days, sport) do
+  def fetch_game_data(sport, start_date, days) do
     {_, start_date} = Date.from_iso8601(start_date)
     dates = Timex.Interval.new(from: (start_date), until: [days: days]) |> Enum.map(fn(dt) -> Timex.format!(dt, "%Y-%m-%d", :strftime)end)
     Enum.map(dates, fn date -> fetch_game_data(sport, date) end)
   end
 
   def fetch_game_data(sport, date) do
-      fetch_and_insert_wunder_games(sport, date)
-      fetch_and_insert_massey_games(sport, date)
+    fetch_and_insert_wunder_games(sport, date)
+    fetch_and_insert_massey_games(sport, date)
   end
 
   def fetch_and_insert_wunder_games(sport, date) do
