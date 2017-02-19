@@ -1,5 +1,7 @@
 defmodule TheSpread.ParseMasseyData do
     @moduledoc """
+      Expects: A map of games returned from `JSON.fetch`
+
       Provides a function `bundle_games/3` which returns a list of Game maps.
 
       Several methods are left public in here that should not be used by other
@@ -16,122 +18,123 @@ defmodule TheSpread.ParseMasseyData do
           ConstructURL.massey(sport, date)
             |> HTML.fetch
     """
-    def bundle_games(html, sport, date) do
-      table = massey_table(html)
-      for row <- table, do: set_variables(row, sport, date)
+    def bundle_games(games_map, sport, date) do
+      games = games_map["DI"]
+      for game <- games, do: set_variables(game, sport, date)
     end
 
+    def parse_list(game) do
+      [ _ | tail ] = game
+      [game_over | tail ] = tail
+      [team_name_1 | tail] = tail
+      [team_name_2 | tail] = tail
+      [_ | tail] = tail
+      [_ | tail] = tail
+      [away_score| tail] = tail
+      [home_score | tail] = tail
+      [_ | tail] = tail
+      [_ | tail] = tail
+      [_ | spread_data] = tail
+      [_, away_line, home_line, over_1, over_2] = spread_data
+
+      %{
+        game_over: game_over,
+        team_name_1: team_name_1,
+        team_name_2: team_name_2,
+        away_line: away_line,
+        home_line: home_line,
+        over_1: over_1,
+        over_2: over_2,
+        home_score: home_score,
+        away_score: away_score
+      }
+    end
     # Left public for testing
-    def set_variables(row, sport, date) do
+    def set_variables(game, sport, date) do
       %{
         date: format_date(date),
         sport: sport,
-        home_team_name: home_team_name(row),
-        away_team_name: away_team_name(row),
-        home_team_massey_line: home_team_massey_line(row),
-        away_team_massey_line: away_team_massey_line(row),
-        massey_over_under: massey_over_under(row),
-        game_over: game_over?(row)
+        home_team_name: home_team_name(game),
+        away_team_name: away_team_name(game),
+        home_team_massey_line: home_team_massey_line(game),
+        away_team_massey_line: away_team_massey_line(game),
+        massey_over_under: massey_over_under(game),
+        game_over: game_over?(game)
       }
     end
 
-    defp massey_table(html) do
-      Floki.find(html, "table#tbl tbody tr.bodyrow")
+    def home_team_name(game) do
+      game = parse_list(game)
+      team_name =
+        case home_team?(game.team_name_1) do
+          true ->
+            Enum.fetch(game.team_name_1,0)
+          _ ->
+            Enum.fetch(game.team_name_2, 0)
+        end
+      {_, team_name} = team_name
+      String.replace(team_name, "@ ", "") |> String.downcase
     end
 
-    def home_team_name(row) do
-      Floki.find(row, ".fteam.tan a")
-        |> List.last
-        |> Floki.text
-        |> String.downcase
-        |> String.replace("@ ", "")
+    def away_team_name(game) do
+      game = parse_list(game)
+      team_name =
+        case home_team?(game.team_name_1) do
+          true ->
+            {_, team_name} = Enum.fetch(game.team_name_2,0)
+          _ ->
+            {_, team_name} = Enum.fetch(game.team_name_1, 0)
+        end
+      {_, team_name} = team_name
+      String.downcase(team_name)
     end
 
-    def away_team_name(row) do
-      Floki.find(row, ".fteam.tan a")
-        |> List.first
-        |> Floki.text
-        |> String.downcase
+    def home_team?(team_name) do
+      List.to_string(team_name) |> String.contains?("@")
     end
 
-    def game_over?(row) do
-      try  do
-         [_, _, _, _] = Floki.find(row, "a")
-         true
-      rescue
-        MatchError -> false
+    def game_over?(game) do
+      {_, link} = Enum.fetch(game, 1)
+      List.to_string(link) |> String.contains?("FINAL")
+
+    end
+
+    def home_team_massey_line(game) do
+      game = parse_list(game)
+      case Enum.fetch(game.home_line,1) == {:ok, "ltgreen"} do
+        true ->
+          {:ok, line} = Enum.fetch(game.home_line,0)
+          line
+        _ -> {:ok, line} = Enum.fetch(game.away_line,0)
+          line * -1
       end
     end
 
-    def home_team_massey_line(row) do
-      #pattern match to grab the spread out of the array
-      [_, elements, _] = Floki.find(row, ".fscore")
-      class = elements
-        |> Floki.find("div")
-        |> List.last
-        |> Floki.attribute("class")
-        |> List.to_string
-        |> String.trim
+    def away_team_massey_line(game) do
+      home_team_massey_line(game) * -1
+    end
 
-      case class do
-        "ltgreen" ->
-          elements
-            |> Floki.find("div")
-            |> List.last
-            |> Floki.text
-            |> String.to_float
-
-        _other    ->
-          spread =
-            elements
-              |> Floki.find("div")
-              |> List.first
-              |> Floki.text
-              |> String.to_float
-          spread * -1
+    def massey_over_under(game) do
+      game = parse_list(game)
+      case Enum.fetch(game.over_1, 1) == {:ok, "ltgreen"} do
+        true ->
+          {:ok, over} = Enum.fetch(game.over_1, 0)
+          over
+        _ ->
+          {:ok, over} = Enum.fetch(game.over_2, 0)
       end
     end
 
-    def away_team_massey_line(row) do
-      home_team_massey_line(row) * -1
+    def home_team_final_score(game) do
+      game = parse_list(game)
+      {:ok, score} = Enum.fetch(game.home_score, 0)
+      score
     end
 
-    def massey_over_under(row) do
-      # This is horrible and I feel bad doing it
-      {_ ,_ , over_under} =
-        Floki.find(row, ".fscore")
-          |> List.last
-          |> Floki.find(".fscore")
-          |> List.last
-      over_under
-        |> List.first
-        |> String.to_float
-    end
-
-    def home_team_final_score(row) do
-      try do
-        {_,_, c} =
-          Floki.find(row, ".fscore.greybg.white" )
-          |> List.last
-        {_,_,score} =
-          c
-          |> List.last
-        score
-          |> List.to_string
-          |> String.to_integer
-      rescue
-        MatchError -> nil
-      end
-    end
-
-    def away_team_final_score(row) do
-      try do
-        {_,_, c} =
-          Floki.find(row, ".fscore.greybg.white" )
-          c |> List.first |> String.to_integer
-      rescue
-        MatchError -> nil
-      end
+    def away_team_final_score(game) do
+      game = parse_list(game)
+      {:ok, score} = Enum.fetch(game.away_score, 0)
+      score
     end
 
     def format_date(date) do
