@@ -23,6 +23,7 @@ defmodule TheSpread.Web do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
+      import IEx
     end
   end
 
@@ -36,6 +37,7 @@ defmodule TheSpread.Web do
 
       import TheSpread.Router.Helpers
       import TheSpread.Gettext
+      import IEx
     end
   end
 

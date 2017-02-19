@@ -268,6 +268,7 @@ defmodule TheSpread.TeamName do
     "wagner": "wagner seahawks",
     "cleveland st": "cleveland state vikings",
     "kennesaw": "",
+    "northeastern": "northeastern huskies",
     "cs northridge": "cs northridge matadors",
     "utep": "utep miners",
     "se missouri st": "se missouri st. redhawks",

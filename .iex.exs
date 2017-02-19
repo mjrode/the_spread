@@ -9,3 +9,4 @@ alias TheSpread.HTML
 alias TheSpread.ParseMasseyData
 alias TheSpread.ParseWunderData
 alias TheSpread.Game
+alias TheSpread.GameData

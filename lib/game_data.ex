@@ -24,9 +24,12 @@ defmodule TheSpread.GameData do
       - date: String in the form of "yyyy-mm-dd" that represents the date of the game
       - days: Integer that represents the number of days you want to iterate over
     ## Examples
-      - TheSpread.GameData.fetch_and_insert_wunder_games("ncaa_basketball", "2017-02-10")
+      - TheSpread.GameData.fetch_and_insert_wunder_games("ncaa_basketball", "2017-02-02")
   """
-
+  def html do
+    games = ConstructURL.wunderdog("ncaa_basketball", "2017-02-02")
+      |> HTML.fetch
+  end
   def fetch_game_data(sport, start_date, days) do
     {_, start_date} = Date.from_iso8601(start_date)
     dates = Timex.Interval.new(from: (start_date), until: [days: days]) |> Enum.map(fn(dt) -> Timex.format!(dt, "%Y-%m-%d", :strftime)end)
@@ -36,6 +39,7 @@ defmodule TheSpread.GameData do
   def fetch_game_data(sport, date) do
     fetch_and_insert_wunder_games(sport, date)
     fetch_and_insert_massey_games(sport, date)
+    calculate_all_games
   end
 
   def fetch_and_insert_wunder_games(sport, date) do
@@ -46,6 +50,25 @@ defmodule TheSpread.GameData do
 
       for game <- games do
         find_or_create(game, date)
+      end
+  end
+
+  def fetch_and_insert_massey_games(sport, date) do
+    games = ConstructURL.massey(sport, date)
+      |> HTML.fetch
+      |> ParseMasseyData.bundle_games(sport, date)
+
+      for game <- games do
+        game_params = prepare_game_params(game)
+        game_query = massey_game_query(game, date)
+        try do
+          game_query
+           |> Game.changeset(game_params)
+           |> Repo.update
+        rescue
+          FunctionClauseError ->
+            nil
+        end
       end
   end
 
@@ -65,26 +88,6 @@ defmodule TheSpread.GameData do
           nil
       end
     end
-  end
-
-  def fetch_and_insert_massey_games(sport, date) do
-    games = ConstructURL.massey(sport, date)
-      |> HTML.fetch
-      |> ParseMasseyData.bundle_games(sport, date)
-
-      for game <- games do
-        game_params = prepare_game_params(game)
-        game_query = massey_game_query(game, date)
-        # require IEx; IEx.pry
-        try do
-          game_query
-           |> Game.changeset(game_params)
-           |> Repo.update
-        rescue
-          FunctionClauseError ->
-            nil
-        end
-      end
   end
 
   defp find_or_create(game, date) do
