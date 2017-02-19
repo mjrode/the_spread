@@ -74,7 +74,6 @@ defmodule TheSpread.Calculate do
     massey = game.home_team_massey_line
     vegas  = game.home_team_vegas_line
 
-    require IEx; IEx.pry
     cond  do
       (massey >= 0 && vegas >= 0) && (vegas >= massey) -> game.home_team_name
       (massey >= 0 && vegas >= 0) && (vegas <= massey) -> game.away_team_name
