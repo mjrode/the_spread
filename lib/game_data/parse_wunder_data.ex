@@ -48,7 +48,7 @@ defmodule TheSpread.ParseWunderData do
   end
 
   def table(html) do
-    Floki.find(html, "table.table.table-bordered.table-condensed tbody tr") |> Enum.drop(3) |> Enum.chunk(3)
+    Floki.find(html, "table.table.table-bordered.table-condensed tbody tr") |> Enum.drop(3) |> Enum.chunk(2)
   end
 
   def home_team_name(row) do
