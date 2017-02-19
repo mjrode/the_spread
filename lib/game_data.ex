@@ -26,10 +26,13 @@ defmodule TheSpread.GameData do
     ## Examples
       - TheSpread.GameData.fetch_and_insert_wunder_games("ncaa_basketball", "2017-02-02")
   """
+
+  # Temp function for quick testing in iex
   def html do
     games = ConstructURL.wunderdog("ncaa_basketball", "2017-02-02")
       |> HTML.fetch
   end
+
   def fetch_game_data(sport, start_date, days) do
     {_, start_date} = Date.from_iso8601(start_date)
     dates = Timex.Interval.new(from: (start_date), until: [days: days]) |> Enum.map(fn(dt) -> Timex.format!(dt, "%Y-%m-%d", :strftime)end)
@@ -55,7 +58,7 @@ defmodule TheSpread.GameData do
 
   def fetch_and_insert_massey_games(sport, date) do
     games = ConstructURL.massey(sport, date)
-      |> HTML.fetch
+      |> JSON.fetch
       |> ParseMasseyData.bundle_games(sport, date)
 
       for game <- games do

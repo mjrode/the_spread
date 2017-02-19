@@ -20,7 +20,6 @@ defmodule TheSpread.ConstructURL do
   """
   @massey_base_url "http://www.masseyratings.com/predjson.php?s="
 
-
   def massey(sport, date) do
     case sport do
       "ncaa_basketball" -> massey_url("cb&sub=11590", date)
