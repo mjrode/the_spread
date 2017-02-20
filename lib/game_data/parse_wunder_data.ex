@@ -206,9 +206,7 @@ defmodule TheSpread.ParseWunderData do
   end
 
   def get_odds_url(row) do
-    address = Floki.find(row, "a:nth-child(1)")
-      |> Floki.attribute("href")
-      |> List.first
+    address = Floki.find(row, "a:nth-child(1)") |> Floki.attribute("href") |> List.first
     "http://www.wunderdog.com#{address}"
   end
 
@@ -231,12 +229,12 @@ defmodule TheSpread.ParseWunderData do
   def home_team_final_score(row) do
     try do
       odds_table = get_odds_url(row)
-        |> TheSpread.HTML.fetch
-        |> Floki.find("tbody tr td")
-        |> Enum.take(18)
-        |> Enum.drop(17)
-        |> Floki.text
-        |> String.to_integer
+         |> TheSpread.HTML.fetch
+         |> Floki.find("tbody tr td")
+         |> Enum.take(18)
+         |> Enum.drop(17)
+         |> Floki.text
+         |> String.to_integer
     rescue
       FunctionClauseError -> nil
     end
