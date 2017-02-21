@@ -30,8 +30,8 @@ defmodule TheSpread.ParseWunderData do
     %{
       date: format_date(date),
       sport: sport,
-      home_team_name: String.downcase(home_team_name(row)),
-      away_team_name: String.downcase(away_team_name(row)),
+      home_team_name: home_team_name(row),
+      away_team_name: away_team_name(row),
       home_team_vegas_line: home_team_vegas_line(row),
       away_team_vegas_line: away_team_vegas_line(row),
       vegas_over_under: vegas_over_under(row),
@@ -52,25 +52,47 @@ defmodule TheSpread.ParseWunderData do
   end
 
   def home_team_name(row) do
-    Floki.find(row, ".jTip")
-      |> Floki.attribute("name")
-      |> List.first
-      |> String.split("vs.")
-      |> List.last
-      |> String.split("-")
-      |> List.first
-      |> String.trim
-      |> String.downcase
+    name =
+      Floki.find(row, ".jTip")
+        |> Floki.attribute("name")
+        |> List.first
+    if String.contains?(name, "vs.") do
+      name
+        |> String.split("vs.")
+        |> List.last
+        |> String.split("-")
+        |> List.first
+        |> String.trim
+        |> String.downcase
+    else
+      name
+        |> String.split("@")
+        |> List.last
+        |> String.split("-")
+        |> List.first
+        |> String.trim
+        |> String.downcase
+    end
   end
 
   def away_team_name(row) do
-    Floki.find(row, ".jTip")
-      |> Floki.attribute("name")
-      |> List.first
-      |> String.split("vs.")
-      |> List.first
-      |> String.trim
-      |> String.downcase
+    name =
+      Floki.find(row, ".jTip")
+        |> Floki.attribute("name")
+        |> List.first
+    if String.contains?(name, "vs.") do
+      name
+        |> String.split("vs.")
+        |> List.first
+        |> String.trim
+        |> String.downcase
+    else
+      name
+        |> String.split("@")
+        |> List.first
+        |> String.trim
+        |> String.downcase
+    end
   end
 
   def home_team_vegas_line(row) do
