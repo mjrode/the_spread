@@ -44,6 +44,7 @@ defmodule TheSpread.Mixfile do
      {:timex, "~> 3.0"},
      {:earmark, "~> 0.1"},
      {:ex_doc, "~> 0.11"},
+     {:phoenix_haml, github: "nixkid/phoenix_haml", branch: "fix_haml_gen"},
      {:exvcr, "~> 0.8", only: :test} ]
   end
 

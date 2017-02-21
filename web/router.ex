@@ -17,6 +17,7 @@ defmodule TheSpread.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/games", PageController, :all_games
   end
 
   # Other scopes may use custom stacks.

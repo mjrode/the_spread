@@ -1,0 +1,11 @@
+.jumbotron
+  %h2.center The Spread
+  %p A betting model based on Massey data and public betting percentages
+
+.jumbotron
+  %h2 Percent Correct:
+    = link @correct / @total, to: page_path(@conn, :all_games)
+  %h2 Correct Games:
+    = link @correct, to: page_path(@conn, :all_games)
+  %h2 Total Games:
+    = link @total, to: page_path(@conn, :all_games)

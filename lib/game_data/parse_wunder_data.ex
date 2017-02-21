@@ -138,14 +138,18 @@ defmodule TheSpread.ParseWunderData do
   end
 
   def vegas_over_under(row) do
-    [over, _, _] = get_odds_table(row)
-    Floki.text(over)
-      |> String.split(" ")
-      |> List.first
-      |> String.split("O")
-      |> List.last
-      |> String.trim
-      |> String.to_float
+    try do
+      [over, _, _] = get_odds_table(row)
+      Floki.text(over)
+        |> String.split(" ")
+        |> List.first
+        |> String.split("O")
+        |> List.last
+        |> String.trim
+        |> String.to_float
+    rescue
+      ArgumentError -> nil
+    end
   end
 
   def bet_count_data(row) do
@@ -175,6 +179,8 @@ defmodule TheSpread.ParseWunderData do
         percent = percent |> List.first
         {_, _, percent} = percent
         List.to_string(percent) |> String.strip(?%) |> String.to_integer
+      ArgumentError ->
+        nil
     end
   end
 
@@ -188,6 +194,8 @@ defmodule TheSpread.ParseWunderData do
         percent = percent |> List.first
         {_, _, percent} = percent
         List.to_string(percent) |> String.strip(?%) |> String.to_integer
+      ArgumentError ->
+        nil
     end
   end
 
